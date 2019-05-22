@@ -6,7 +6,9 @@ const keys = require('./config/keys')
 require('./models/User');
 require('./services/passport');
 
-mongoose.connect(keys.mongoURI);
+mongoose.connect(keys.mongoURI, {useNewUrlParser:true})
+  .then(() => console.log("MongoDB Connected"))
+  .catch(err => console.log(err));
 
 const app = express();
 
@@ -18,7 +20,6 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
-
 
 require('./routes/authRoutes')(app);
 
